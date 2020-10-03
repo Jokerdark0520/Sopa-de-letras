@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>Sopa de letras</title>
+<!-- Estilos -->
+
+<link rel="stylesheet" type="text/css" href="style.css" media="all">
+<link rel="stylesheet"href="bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="jquery.tagit.css">
+
+<!-- Scripts generación sopa de letras -->
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="wordfind.js"></script>
+<script type="text/javascript" src="wordfindgame.js"></script>
+<script type="text/javascript" src="bootstrap.min.js"></script>
+<script type="text/javascript" src="jquery-ui.min.js"></script>
+<script type="text/javascript" src="tag-it.js"></script>
+
+<!-- Estilos -->
+
+<style media="print">
+.ocultar {display:none;}
+.col-md-3 {width: 25%;float: left;}
+.col-md-9 {width: 75%;float: left;}
+</style>
+
+</head>
+<body>
+
+
+
+	<div class="container">
+
+<script type="text/javascript">
+	var Palabras;
+	$(document).ready(function(){
+		Palabras = $("#Palabras").tagit({});
+		Crear();
+	});
+</script>
+
+
+		<div class="row ocultar text-center">
+			<h4>1) Escribe las palabras que usarás en la sopa de letras. Presiona el botón <strong>"Crear juego"</strong></h4>
+
+			<ul id="Palabras">
+				<li>sopa</li>
+				<li>letras</li>
+				<li>diseño</li>
+				<li>web</li>
+				<li>ingenieria</li>
+			</ul>
+	</div>
+
+	<div class="row text-center">
+		<h4 class="ocultar">2) Crea la sopa de letras</h4>
+		<div class="ocultar">
+			<button onclick="Crear();" class="btn btn-success btn-lg">Crear Sopa de Letras
+			</button>
+			<button onclick="window.print();" class="btn btn-info btn-lg">Imprimir</button>
+			<button id="Resolver" class="btn btn-danger btn-lg">Resolver</button>
+		</div>
+	</div>
+
+	<div>
+		<div class="col-md-3">
+			<div id='Palabra'></div>
+		</div>
+		<div class="col-md-9">
+			<div id='juego'></div>
+		</div>
+	</div>
+
+
+	</div>
+
+	<script>
+		var words = [];
+		var sopa;
+//Meter palabras
+		function Crear(){
+			datos = Palabras[0].textContent.trim().split("x");
+//Meter las palabras al words
+			for (i = 0; i< (datos.length)-1; i++){
+				words.push(datos[i]);
+			}
+			sopa = wordfindgame.create(datos, '#juego','#Palabras');
+			var puzzle = wordfind.newPuzzle(datos, {height: 10, width: 10, fillBlanks: false});
+		}
+
+		$('#Resolver').click(function() {
+			wordfindgame.solve(gamePuzzle, words);
+		});
+
+	</script>
+
+</body>
+</html>
